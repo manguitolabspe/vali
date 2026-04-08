@@ -67,19 +67,41 @@ export const Location = () => {
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            className="h-[400px] md:h-[500px] rounded-[40px] overflow-hidden shadow-2xl border-8 border-gray-50 relative group"
+            onClick={() => window.open(googleMapsUrl, "_blank")}
+            className="h-[400px] md:h-[500px] rounded-[40px] overflow-hidden shadow-2xl border-8 border-gray-50 relative group cursor-pointer"
           >
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.664446487544!2d-81.2683363!3d-4.5847815!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9031839999999999%3A0x9999999999999999!2sAv.%20Mariscal%20C%C3%A1ceres%20E%2061%2C%20Talara!5e0!3m2!1ses!2spe!4v1712510000000!5m2!1ses!2spe"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700"
-            ></iframe>
-            <div className="absolute inset-0 pointer-events-none border-[1px] border-black/5 rounded-[32px]" />
+            {/* Static Map Placeholder/Stylized Image */}
+            <img 
+              src="https://picsum.photos/seed/talara-map/1000/800?blur=1" 
+              alt="Ubicación en Talara"
+              className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+              referrerPolicy="no-referrer"
+            />
+            
+            {/* Overlay Gradient */}
+            <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors duration-500" />
+
+            {/* Central Pin and Label */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <motion.div 
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                className="w-16 h-16 bg-secondary text-primary rounded-full flex items-center justify-center shadow-2xl border-4 border-white z-10"
+              >
+                <MapPin size={32} fill="currentColor" />
+              </motion.div>
+              <div className="mt-4 bg-white px-6 py-2 rounded-full shadow-xl border border-gray-100 transform -translate-y-2 group-hover:scale-110 transition-transform">
+                <p className="font-black text-primary text-sm">VALI Talara</p>
+              </div>
+            </div>
+
+            {/* Click Indicator */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="bg-primary text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 shadow-2xl">
+                <Navigation size={18} />
+                Abrir en Google Maps
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
