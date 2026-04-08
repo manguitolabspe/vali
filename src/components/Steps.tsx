@@ -38,9 +38,9 @@ export const Steps = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-4 gap-12 relative">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 relative">
           {/* Connector Line (Desktop) */}
-          <div className="hidden md:block absolute top-1/4 left-0 right-0 h-0.5 bg-white/10 z-0" />
+          <div className="hidden lg:block absolute top-1/4 left-0 right-0 h-0.5 bg-white/10 z-0" />
 
           {steps.map((step, i) => (
             <motion.div

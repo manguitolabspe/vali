@@ -72,10 +72,13 @@ export const Location = () => {
           >
             {/* Static Map Placeholder/Stylized Image */}
             <img 
-              src="https://picsum.photos/seed/talara-map/1000/800?blur=1" 
+              src="/mapa-talara.webp" 
               alt="Ubicación en Talara"
-              className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+              className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
               referrerPolicy="no-referrer"
+              onError={(e) => {
+                e.currentTarget.src = "https://picsum.photos/seed/talara-map/1000/800?blur=1";
+              }}
             />
             
             {/* Overlay Gradient */}

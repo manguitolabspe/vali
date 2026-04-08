@@ -7,6 +7,12 @@ export const Hero = () => {
     <section className="relative min-h-screen pt-24 pb-12 overflow-hidden flex items-center">
       {/* Background Elements */}
       <div className="absolute inset-0 z-0">
+        <img 
+          src="/hero-bg.webp" 
+          alt="Hero Background" 
+          className="absolute inset-0 w-full h-full object-cover opacity-10"
+          referrerPolicy="no-referrer"
+        />
         <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/5 rounded-l-[100px] transform translate-x-20" />
         <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-secondary/10 rounded-full blur-3xl" />
       </div>
@@ -25,7 +31,7 @@ export const Hero = () => {
               Préstamos 100% Seguros
             </div>
             
-            <h1 className="text-4xl md:text-7xl font-black text-primary leading-[1.1]">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-primary leading-[1.1]">
               Dinero <span className="text-secondary">al instante</span> por tus prendas.
             </h1>
             

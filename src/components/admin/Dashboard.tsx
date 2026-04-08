@@ -29,7 +29,8 @@ import {
   History,
   ExternalLink,
   Globe,
-  Loader2
+  Loader2,
+  Menu
 } from "lucide-react";
 import { Button } from "../Button";
 import { cn } from "../../lib/utils";
@@ -100,6 +101,7 @@ const Modal = ({ isOpen, onClose, title, children }: { isOpen: boolean; onClose:
 
 export const Dashboard = ({ onLogout }: DashboardProps) => {
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState<any>(null);
   const [sellingItem, setSellingItem] = useState<any>(null);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -141,7 +143,7 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
               <h2 className="text-3xl font-black text-primary">Gestión de Préstamos</h2>
               <Button variant="secondary" size="sm">+ Nuevo Préstamo</Button>
             </div>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
                 <p className="text-sm text-gray-500 font-medium">Préstamos por Vencer</p>
                 <h4 className="text-2xl font-black text-orange-600">12</h4>
@@ -164,7 +166,7 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
                 </div>
               </div>
               <div className="overflow-x-auto">
-                <table className="w-full text-left">
+                <table className="w-full min-w-[800px] text-left">
                   <thead>
                     <tr className="bg-gray-50/50 text-gray-400 text-xs font-bold uppercase tracking-widest">
                       <th className="px-6 py-4">Contrato</th>
@@ -204,7 +206,7 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
                 <Button variant="secondary" size="sm">Registrar Ingreso</Button>
               </div>
             </div>
-            <div className="grid md:grid-cols-4 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm text-center">
                 <p className="text-xs text-gray-400 font-bold uppercase mb-2">Total Prendas</p>
                 <h4 className="text-3xl font-black text-primary">1,240</h4>
@@ -222,11 +224,11 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
                 <h4 className="text-3xl font-black text-secondary">42</h4>
               </div>
             </div>
-            <div className="bg-white rounded-[32px] border border-gray-100 overflow-hidden">
-              <table className="w-full text-left">
+            <div className="bg-white rounded-[32px] border border-gray-100 overflow-x-auto">
+              <table className="w-full min-w-[800px] text-left">
                 <thead>
                   <tr className="bg-gray-50/50 text-gray-400 text-xs font-bold uppercase tracking-widest">
-                    <th className="px-6 py-4">ID Item</th>
+                    <th className="px-6 py-4">ID Artículo</th>
                     <th className="px-6 py-4">Descripción</th>
                     <th className="px-6 py-4">Peso/Detalle</th>
                     <th className="px-6 py-4">Ubicación</th>
@@ -264,7 +266,7 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
                 <Button variant="secondary" size="sm">Cierre de Caja</Button>
               </div>
             </div>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="bg-primary text-white p-6 rounded-[32px] shadow-lg">
                 <p className="text-white/60 text-xs font-bold uppercase mb-1">Saldo en Caja</p>
                 <h4 className="text-3xl font-black">S/ 8,420.50</h4>
@@ -314,7 +316,7 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
         return (
           <div className="space-y-6">
             <h2 className="text-3xl font-black text-primary">Cartera de Clientes</h2>
-            <div className="grid md:grid-cols-4 gap-4">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
                 <div 
                   key={i} 
@@ -356,7 +358,7 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
               </div>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-6">
               <div className="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm">
                 <div className="flex justify-between items-center mb-8">
                   <h3 className="font-black text-primary flex items-center gap-2">
@@ -411,7 +413,7 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="bg-white p-6 rounded-[32px] border border-gray-100 text-center">
                 <p className="text-xs text-gray-400 font-bold uppercase mb-2">Tasa de Recuperación</p>
                 <h4 className="text-4xl font-black text-primary">92.4%</h4>
@@ -437,7 +439,7 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
               <h2 className="text-3xl font-black text-primary">Ventas y Remates</h2>
               <Button variant="secondary" size="sm">Publicar en Web</Button>
             </div>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {inventoryItems.filter(i => i.status === 'Remate').map((item, i) => (
                 <div key={i} className="bg-white rounded-[32px] border border-gray-100 overflow-hidden shadow-sm group">
                   <div className="h-48 bg-gray-100 relative">
@@ -464,7 +466,7 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
           <div className="space-y-6">
             <h2 className="text-3xl font-black text-primary">Configuración del Sistema</h2>
             <div className="bg-white rounded-[32px] border border-gray-100 p-8">
-              <div className="grid md:grid-cols-2 gap-12">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-12">
                 <div className="space-y-6">
                   <h3 className="font-bold text-primary border-b pb-2">Parámetros de Préstamo</h3>
                   <div className="space-y-4">
@@ -535,7 +537,7 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
                 <Button variant="outline" size="sm">Ver todo</Button>
               </div>
               <div className="overflow-x-auto">
-                <table className="w-full text-left">
+                <table className="w-full min-w-[800px] text-left">
                   <thead>
                     <tr className="bg-gray-50/50 text-gray-400 text-xs font-bold uppercase tracking-widest">
                       <th className="px-6 py-4">ID</th>
@@ -619,21 +621,48 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 flex relative">
+      {/* Mobile Sidebar Overlay */}
+      <AnimatePresence>
+        {isMobileSidebarOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsMobileSidebarOpen(false)}
+            className="fixed inset-0 bg-primary/40 backdrop-blur-sm z-[60] lg:hidden"
+          />
+        )}
+      </AnimatePresence>
+
       {/* Sidebar */}
-      <aside className="w-64 bg-primary text-white p-6 hidden lg:flex flex-col gap-8">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
-            <span className="text-primary font-bold text-xl">V</span>
+      <aside className={cn(
+        "fixed inset-y-0 left-0 w-64 bg-primary text-white p-6 flex flex-col gap-8 z-[70] transition-transform duration-300 lg:relative lg:translate-x-0",
+        isMobileSidebarOpen ? "translate-x-0" : "-translate-x-full"
+      )}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
+              <span className="text-primary font-bold text-xl">V</span>
+            </div>
+            <span className="text-2xl font-bold tracking-tight">VALI Admin</span>
           </div>
-          <span className="text-2xl font-bold tracking-tight">VALI Admin</span>
+          <button 
+            onClick={() => setIsMobileSidebarOpen(false)}
+            className="lg:hidden p-2 hover:bg-white/10 rounded-lg"
+          >
+            <X size={20} />
+          </button>
         </div>
 
         <nav className="flex-1 space-y-1">
           {menuItems.map((item) => (
             <button 
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
+              onClick={() => {
+                setActiveTab(item.id);
+                setIsMobileSidebarOpen(false);
+              }}
               className={cn(
                 "w-full flex items-center gap-3 p-3 rounded-xl font-medium transition-all group",
                 activeTab === item.id ? "bg-white/10 text-secondary" : "hover:bg-white/5 text-white/60 hover:text-white"
@@ -660,18 +689,26 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-4 lg:p-8 overflow-y-auto">
+      <main className="flex-1 p-4 lg:p-8 overflow-y-auto w-full">
         {/* Header */}
-        <header className="flex justify-between items-center mb-8">
-          <div className="relative w-full max-w-md hidden md:block">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-            <input
-              type="text"
-              placeholder="Buscar préstamos, clientes..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-white rounded-2xl border border-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/10"
-            />
+        <header className="flex justify-between items-center mb-8 gap-4">
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => setIsMobileSidebarOpen(true)}
+              className="lg:hidden p-3 bg-white rounded-xl border border-gray-100 hover:bg-gray-50 transition-colors"
+            >
+              <Menu size={20} className="text-primary" />
+            </button>
+            <div className="relative w-full max-w-md hidden md:block">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+              <input
+                type="text"
+                placeholder="Buscar préstamos, clientes..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 bg-white rounded-2xl border border-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/10"
+              />
+            </div>
           </div>
           <div className="flex items-center gap-4 ml-auto">
             <div className="relative">
@@ -716,10 +753,17 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
             </div>
             <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
               <div className="text-right hidden sm:block">
-                <p className="text-sm font-bold text-primary">Admin User</p>
+                <p className="text-sm font-bold text-primary">Administrador</p>
                 <p className="text-xs text-gray-500">Gerente de Sucursal</p>
               </div>
-              <img src="https://picsum.photos/seed/admin/40/40" className="w-10 h-10 rounded-xl border-2 border-primary/10" referrerPolicy="no-referrer" />
+              <img 
+                src="/admin-avatar.webp" 
+                className="w-10 h-10 rounded-xl border-2 border-primary/10" 
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  e.currentTarget.src = "https://picsum.photos/seed/admin/40/40";
+                }}
+              />
             </div>
           </div>
         </header>
@@ -754,7 +798,7 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
                 <p className="text-primary font-bold flex items-center gap-2"><Phone size={14} /> {selectedClient.phone}</p>
               </div>
               <div className="p-4 bg-gray-50 rounded-2xl space-y-1">
-                <p className="text-[10px] font-black text-gray-400 uppercase">Email</p>
+                <p className="text-[10px] font-black text-gray-400 uppercase">Correo Electrónico</p>
                 <p className="text-primary font-bold flex items-center gap-2 truncate"><Mail size={14} /> {selectedClient.email}</p>
               </div>
             </div>
@@ -799,7 +843,7 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
             <div className="flex gap-4 p-4 bg-gray-50 rounded-2xl">
               <img src={`https://picsum.photos/seed/${sellingItem.id}/80/80`} className="w-20 h-20 rounded-xl object-cover" />
               <div>
-                <p className="text-xs font-black text-gray-400 uppercase">Artículo</p>
+                <p className="text-xs font-black text-gray-400 uppercase">Artículo de Garantía</p>
                 <h4 className="font-black text-primary">{sellingItem.item}</h4>
                 <p className="text-sm font-bold text-secondary">Precio Sugerido: S/ 1,500</p>
               </div>

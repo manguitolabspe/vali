@@ -43,8 +43,8 @@ export const Requirements = () => {
             <div className="relative">
               <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl rotate-3">
                 <img
-                  src="https://picsum.photos/seed/jewelry/800/800"
-                  alt="Requirements"
+                  src="/requisitos-joyas.webp"
+                  alt="Requisitos VALI"
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />

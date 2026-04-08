@@ -21,7 +21,7 @@ export const Services = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-6 gap-6">
           {items.map((item, i) => (
             <motion.div
               key={i}

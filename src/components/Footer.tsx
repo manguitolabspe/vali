@@ -4,13 +4,16 @@ export const Footer = () => {
   return (
     <footer className="bg-primary text-white pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-4 gap-12 mb-16">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
           <div className="space-y-6">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center shadow-lg">
-                <span className="text-primary font-bold text-xl">V</span>
-              </div>
+              <img 
+                src="/logo-white.webp" 
+                alt="VALI Logo" 
+                className="h-10 w-auto object-contain"
+                referrerPolicy="no-referrer"
+              />
               <span className="text-2xl font-bold tracking-tight">VALI</span>
             </div>
             <p className="text-white/60 text-sm leading-relaxed">

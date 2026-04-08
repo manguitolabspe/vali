@@ -35,9 +35,12 @@ export const Navbar = ({ onAdminClick }: { onAdminClick?: () => void }) => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shadow-lg">
-              <span className="text-secondary font-bold text-xl">V</span>
-            </div>
+            <img 
+              src={isScrolled ? "/logo.webp" : "/logo.webp"} 
+              alt="VALI Logo" 
+              className="h-10 w-auto object-contain"
+              referrerPolicy="no-referrer"
+            />
             <span className={cn(
               "text-2xl font-bold tracking-tight",
               isScrolled ? "text-primary" : "text-primary"
@@ -47,7 +50,7 @@ export const Navbar = ({ onAdminClick }: { onAdminClick?: () => void }) => {
           </div>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -77,7 +80,7 @@ export const Navbar = ({ onAdminClick }: { onAdminClick?: () => void }) => {
 
           {/* Mobile Toggle */}
           <button
-            className="md:hidden text-primary p-2"
+            className="lg:hidden text-primary p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -92,7 +95,7 @@ export const Navbar = ({ onAdminClick }: { onAdminClick?: () => void }) => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
+            className="lg:hidden bg-white border-t border-gray-100 overflow-hidden"
           >
             <div className="px-4 py-6 space-y-4">
               {navLinks.map((link) => (
