@@ -20,6 +20,7 @@ export const Navbar = ({ onAdminClick }: { onAdminClick?: () => void }) => {
     { name: "Inicio", href: "#" },
     { name: "Cómo Funciona", href: "#pasos" },
     { name: "Requisitos", href: "#requisitos" },
+    { name: "Remates", href: "#remates" },
     { name: "Ubicación", href: "#ubicacion" },
     { name: "Preguntas", href: "#faq" },
   ];

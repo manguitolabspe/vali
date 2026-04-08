@@ -54,10 +54,16 @@ const recentRequests = [
 ];
 
 const inventoryItems = [
-  { id: "INV-101", item: "Cadena de Oro 24k", weight: "15g", vault: "A-12", status: "Custodia" },
-  { id: "INV-102", item: "Cámara Sony Alpha", weight: "N/A", vault: "B-05", status: "Remate" },
-  { id: "INV-103", item: "Reloj Omega Speedmaster", weight: "N/A", vault: "A-01", status: "Custodia" },
-  { id: "INV-104", item: "Laptop Dell XPS 15", weight: "N/A", vault: "B-08", status: "Custodia" },
+  { id: "INV-101", item: "Cadena de Oro 24k", weight: "15g", vault: "A-12", status: "Custodia", published: false },
+  { id: "INV-102", item: "Cámara Sony Alpha A7 III", weight: "N/A", vault: "B-05", status: "Remate", published: false },
+  { id: "INV-103", item: "Reloj Omega Speedmaster", weight: "N/A", vault: "A-01", status: "Custodia", published: false },
+  { id: "INV-104", item: "Laptop Dell XPS 15", weight: "N/A", vault: "B-08", status: "Custodia", published: false },
+  { id: "INV-105", item: "Anillo de Oro 18k con Diamante", weight: "4.5g", vault: "A-05", status: "Remate", published: true },
+  { id: "INV-106", item: "MacBook Pro M2 13\"", weight: "N/A", vault: "B-02", status: "Remate", published: true },
+  { id: "INV-107", item: "Reloj Tissot Le Locle", weight: "N/A", vault: "A-08", status: "Remate", published: true },
+  { id: "INV-108", item: "iPhone 14 Pro 256GB", weight: "N/A", vault: "B-10", status: "Remate", published: false },
+  { id: "INV-109", item: "Pulsera de Plata 925", weight: "12g", vault: "A-03", status: "Remate", published: false },
+  { id: "INV-110", item: "Smartwatch Samsung Watch 6", weight: "N/A", vault: "B-12", status: "Custodia", published: false },
 ];
 
 const transactions = [
@@ -104,6 +110,7 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState<any>(null);
   const [sellingItem, setSellingItem] = useState<any>(null);
+  const [selectedItemDetails, setSelectedItemDetails] = useState<any>(null);
   const [showNotifications, setShowNotifications] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -436,16 +443,66 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
         return (
           <div className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-3xl font-black text-primary">Ventas y Remates</h2>
-              <Button variant="secondary" size="sm">Publicar en Web</Button>
+              <div>
+                <h2 className="text-3xl font-black text-primary">Ventas y Remates</h2>
+                <p className="text-sm text-gray-500 mt-1">
+                  Gestiona los artículos que han pasado a remate y su visibilidad en la web.
+                </p>
+              </div>
+              <div className="flex gap-4">
+                <div className="bg-white px-4 py-2 rounded-2xl border border-gray-100 flex items-center gap-2">
+                  <Box size={16} className="text-primary/40" />
+                  <span className="text-sm font-bold text-primary">
+                    {inventoryItems.filter(i => i.status === 'Remate').length} Total
+                  </span>
+                </div>
+                <div className="bg-white px-4 py-2 rounded-2xl border border-gray-100 flex items-center gap-2">
+                  <Globe size={16} className="text-green-500" />
+                  <span className="text-sm font-bold text-primary">
+                    {inventoryItems.filter(i => i.status === 'Remate' && i.published).length} Publicados
+                  </span>
+                </div>
+                <div className="bg-white px-4 py-2 rounded-2xl border border-gray-100 flex items-center gap-2">
+                  <AlertCircle size={16} className="text-orange-500" />
+                  <span className="text-sm font-bold text-primary">
+                    {inventoryItems.filter(i => i.status === 'Remate' && !i.published).length} Pendientes
+                  </span>
+                </div>
+                <Button variant="secondary" size="sm">Publicar en Web</Button>
+              </div>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {inventoryItems.filter(i => i.status === 'Remate').map((item, i) => (
-                <div key={i} className="bg-white rounded-[32px] border border-gray-100 overflow-hidden shadow-sm group">
+                <div key={i} className="bg-white rounded-[32px] border border-gray-100 overflow-hidden shadow-sm group relative">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className={cn(
+                      "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shadow-sm",
+                      item.published ? "bg-green-500 text-white" : "bg-gray-400 text-white"
+                    )}>
+                      {item.published ? "Publicado" : "No Publicado"}
+                    </span>
+                  </div>
                   <div className="h-48 bg-gray-100 relative">
-                    <img src={`https://picsum.photos/seed/${item.id}/400/300`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                    <img 
+                      src={
+                        item.id === 'INV-102' ? '/remate-camara.webp' : 
+                        item.id === 'INV-105' ? '/remate-anillo.webp' :
+                        item.id === 'INV-106' ? '/remate-laptop.webp' :
+                        item.id === 'INV-107' ? '/remate-reloj.webp' :
+                        `https://picsum.photos/seed/${item.id}/400/300`
+                      } 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                      onError={(e) => {
+                        e.currentTarget.src = `https://picsum.photos/seed/${item.id}/400/300`;
+                      }}
+                    />
                     <div className="absolute top-4 right-4 bg-secondary text-primary font-black px-3 py-1 rounded-lg text-xs">
-                      S/ 1,500
+                      {item.id === 'INV-102' ? 'S/ 1,500' : 
+                       item.id === 'INV-105' ? 'S/ 2,800' :
+                       item.id === 'INV-106' ? 'S/ 4,200' :
+                       item.id === 'INV-107' ? 'S/ 1,100' : 
+                       item.id === 'INV-108' ? 'S/ 3,500' :
+                       item.id === 'INV-109' ? 'S/ 450' : 'S/ 0'}
                     </div>
                   </div>
                   <div className="p-6">
@@ -453,7 +510,7 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
                     <p className="text-xs text-gray-400 mb-4">ID: {item.id} • Ref: {item.vault}</p>
                     <div className="flex gap-2">
                       <Button onClick={() => handleSell(item)} variant="primary" size="sm" className="flex-1">Vender</Button>
-                      <Button variant="outline" size="sm">Detalles</Button>
+                      <Button onClick={() => setSelectedItemDetails(item)} variant="outline" size="sm">Detalles</Button>
                     </div>
                   </div>
                 </div>
@@ -841,7 +898,13 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
         {sellingItem && !showSuccess && (
           <div className="space-y-6">
             <div className="flex gap-4 p-4 bg-gray-50 rounded-2xl">
-              <img src={`https://picsum.photos/seed/${sellingItem.id}/80/80`} className="w-20 h-20 rounded-xl object-cover" />
+              <img 
+                src={sellingItem.id === 'INV-102' ? '/remate-camara.webp' : `https://picsum.photos/seed/${sellingItem.id}/80/80`} 
+                className="w-20 h-20 rounded-xl object-cover" 
+                onError={(e) => {
+                  e.currentTarget.src = `https://picsum.photos/seed/${sellingItem.id}/80/80`;
+                }}
+              />
               <div>
                 <p className="text-xs font-black text-gray-400 uppercase">Artículo de Garantía</p>
                 <h4 className="font-black text-primary">{sellingItem.item}</h4>
@@ -899,6 +962,91 @@ export const Dashboard = ({ onLogout }: DashboardProps) => {
                 className="w-full py-4 rounded-2xl"
               >
                 Cerrar
+              </Button>
+            </div>
+          </div>
+        )}
+      </Modal>
+
+      {/* Item Details Modal */}
+      <Modal
+        isOpen={!!selectedItemDetails}
+        onClose={() => setSelectedItemDetails(null)}
+        title="Detalles del Artículo"
+      >
+        {selectedItemDetails && (
+          <div className="space-y-6">
+            <div className="aspect-video rounded-2xl overflow-hidden bg-gray-100">
+              <img 
+                src={
+                  selectedItemDetails.id === 'INV-102' ? '/remate-camara.webp' : 
+                  selectedItemDetails.id === 'INV-105' ? '/remate-anillo.webp' :
+                  selectedItemDetails.id === 'INV-106' ? '/remate-laptop.webp' :
+                  selectedItemDetails.id === 'INV-107' ? '/remate-reloj.webp' :
+                  `https://picsum.photos/seed/${selectedItemDetails.id}/600/400`
+                } 
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.src = `https://picsum.photos/seed/${selectedItemDetails.id}/600/400`;
+                }}
+              />
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <h4 className="text-2xl font-black text-primary">{selectedItemDetails.item}</h4>
+                <p className="text-sm font-bold text-gray-400 uppercase">ID: {selectedItemDetails.id} • Bóveda: {selectedItemDetails.vault}</p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-4 bg-gray-50 rounded-2xl">
+                  <p className="text-[10px] font-black text-gray-400 uppercase mb-1">Estado Actual</p>
+                  <span className="px-2 py-0.5 bg-red-100 text-red-700 rounded-full text-[10px] font-black uppercase">
+                    {selectedItemDetails.status}
+                  </span>
+                </div>
+                <div className="p-4 bg-gray-50 rounded-2xl">
+                  <p className="text-[10px] font-black text-gray-400 uppercase mb-1">Precio Base</p>
+                  <p className="text-primary font-black">
+                    {selectedItemDetails.id === 'INV-102' ? 'S/ 1,500' : 
+                     selectedItemDetails.id === 'INV-105' ? 'S/ 2,800' :
+                     selectedItemDetails.id === 'INV-106' ? 'S/ 4,200' :
+                     selectedItemDetails.id === 'INV-107' ? 'S/ 1,100' : 
+                     selectedItemDetails.id === 'INV-108' ? 'S/ 3,500' :
+                     selectedItemDetails.id === 'INV-109' ? 'S/ 450' : 'S/ 0'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-4 bg-gray-50 rounded-2xl space-y-2">
+                <p className="text-[10px] font-black text-gray-400 uppercase">Descripción Técnica</p>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  {selectedItemDetails.id === 'INV-102' ? (
+                    "Cámara Mirrorless de alta gama. Incluye lente 28-70mm, batería original y cargador. Estado estético 9/10. Sin fallas técnicas."
+                  ) : (
+                    "Artículo de valor verificado por nuestros tasadores. Se encuentra en óptimas condiciones para su remate."
+                  )}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <Button 
+                variant="outline" 
+                className="flex-1 py-4 rounded-2xl"
+                onClick={() => setSelectedItemDetails(null)}
+              >
+                Cerrar
+              </Button>
+              <Button 
+                variant="primary" 
+                className="flex-1 py-4 rounded-2xl"
+                onClick={() => {
+                  handleSell(selectedItemDetails);
+                  setSelectedItemDetails(null);
+                }}
+              >
+                Vender Ahora
               </Button>
             </div>
           </div>

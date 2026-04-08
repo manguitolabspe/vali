@@ -10,8 +10,8 @@ import { Footer } from "./components/Footer";
 import { Button } from "./components/Button";
 import { Comparison } from "./components/Comparison";
 import { Referral } from "./components/Referral";
-import { TrustBar } from "./components/TrustBar";
 import { Location } from "./components/Location";
+import { RematesPage } from "./components/RematesPage";
 import { MessageCircle, MapPin } from "lucide-react";
 import { Login } from "./components/admin/Login";
 import { Dashboard } from "./components/admin/Dashboard";
@@ -33,13 +33,14 @@ export default function App() {
       
       <main>
         <Hero />
-        <TrustBar />
         
         <Comparison />
         
         <Services />
         <Steps />
         <Requirements />
+
+        <RematesPage />
 
         <Location />
         

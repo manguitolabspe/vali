@@ -1,6 +1,17 @@
+import { useState } from "react";
 import { Phone, Mail, MapPin, Facebook, Instagram, MessageCircle } from "lucide-react";
+import { LegalModal } from "./LegalModal";
 
 export const Footer = () => {
+  const [legalModal, setLegalModal] = useState<{ isOpen: boolean; type: "terms" | "privacy" | "complaints" }>({
+    isOpen: false,
+    type: "terms"
+  });
+
+  const openLegal = (type: "terms" | "privacy" | "complaints") => {
+    setLegalModal({ isOpen: true, type });
+  };
+
   return (
     <footer className="bg-primary text-white pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,9 +59,30 @@ export const Footer = () => {
           <div>
             <h4 className="text-lg font-bold mb-6 text-secondary">Legal</h4>
             <ul className="space-y-4 text-white/60 text-sm">
-              <li><a href="#" className="hover:text-white transition-colors">Términos y Condiciones</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Políticas de Privacidad</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Libro de Reclamaciones</a></li>
+              <li>
+                <button 
+                  onClick={() => openLegal("terms")}
+                  className="hover:text-white transition-colors text-left"
+                >
+                  Términos y Condiciones
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => openLegal("privacy")}
+                  className="hover:text-white transition-colors text-left"
+                >
+                  Políticas de Privacidad
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => openLegal("complaints")}
+                  className="hover:text-white transition-colors text-left"
+                >
+                  Libro de Reclamaciones
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -78,6 +110,12 @@ export const Footer = () => {
           <p>© {new Date().getFullYear()} VALI - Casa de Empeño Seguro. Todos los derechos reservados.</p>
         </div>
       </div>
+
+      <LegalModal 
+        isOpen={legalModal.isOpen}
+        onClose={() => setLegalModal({ ...legalModal, isOpen: false })}
+        type={legalModal.type}
+      />
     </footer>
   );
 };
